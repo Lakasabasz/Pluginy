@@ -47,6 +47,7 @@ klasy:
 
 ## Features
 
+* Bug fixes
 * Optimization
 * Database support
 * Log to file
