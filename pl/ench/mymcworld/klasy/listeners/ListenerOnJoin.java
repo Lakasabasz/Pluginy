@@ -1,9 +1,11 @@
-package pl.ench.mymcworld.klasy;
+package pl.ench.mymcworld.klasy.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import pl.ench.mymcworld.klasy.Main;
 
 public class ListenerOnJoin implements Listener{
 	

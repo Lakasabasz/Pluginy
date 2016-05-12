@@ -5,6 +5,13 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import pl.ench.mymcworld.klasy.listeners.ListenerOnBlockBreak;
+import pl.ench.mymcworld.klasy.listeners.ListenerOnBlockPlace;
+import pl.ench.mymcworld.klasy.listeners.ListenerOnJoin;
+import pl.ench.mymcworld.klasy.listeners.ListenerPlayerInteract;
+import pl.ench.mymcworld.klasy.warehouses.KlasyData;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
+
 public class Main extends JavaPlugin{
 	
 	private static Main instance;

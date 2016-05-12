@@ -5,7 +5,13 @@ import org.bukkit.entity.Player;
 public class CmdklasyExecuteReload {
 	
 	public static boolean klasyReloadExecute(Player p){
-		return ConfigManager.configReload();
+		if(!ConfigManager.configReload()){
+			return false;
+		}
+		if(!FileManager.reloadFiles()){
+			return false;
+		}
+		return true;
 	}
 
 }

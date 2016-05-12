@@ -1,4 +1,4 @@
-package pl.ench.mymcworld.klasy;
+package pl.ench.mymcworld.klasy.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -6,6 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
+
+import pl.ench.mymcworld.klasy.ConfigManager;
+import pl.ench.mymcworld.klasy.Utils;
 
 public class ListenerOnBlockPlace implements Listener {
 

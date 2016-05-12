@@ -2,6 +2,9 @@ package pl.ench.mymcworld.klasy;
 
 import org.bukkit.entity.Player;
 
+import pl.ench.mymcworld.klasy.warehouses.DropData;
+import pl.ench.mymcworld.klasy.warehouses.KlasyData;
+
 public class CmdklasyExecuteHelp {
 	public static void klasyHelpExecute(Player p){
 		if(FileManager.getMsg().getBoolean("helpText.usePrefix.toFirstLine")) p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("helpText.in"));

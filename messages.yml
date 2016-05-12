@@ -1,0 +1,40 @@
+prefix: "[Klasy/drop]"
+noClassNoDrop: "Nie masz klasy, a tym samym dostępu do dropu. Ustaw sobie klasę"
+countDrop: "Masz {DROPCOUNT} rodzaji dropu" #Dostępne zmienne: {DROPCOUNT}
+dropData: "{DROPNAME} z szansą {DROPCHANCE}" #Dostępne zmienne: {DROPNAME} i {DROPCHANCE}
+noPermissionsCommand: "Nie masz dostępu do tej komendy"
+reloadSucces: "Przeładowano"
+reloadError: "Błąd przeładowania"
+playerNotExist: "Gracz nie istnieje w systemie" #Dostępne zmienne: {PLAYERNAME}
+classNotExist: "Klasa o podanym id nie istnieje" #Dostępna zmienna: {CLASSID}
+maxClassReached: "Masz maksymalną ilość klas"
+selectedClassExist: "Masz już tą klasę"
+toLowLevel: "Masz za niski poziom" #Dostępne zmienne: {} i {}
+helpText:
+  usePrefix:
+    toFirstLine: false
+    toNextLine: false
+  in: "Komendy do Mymcworld klasy/drop"
+  commandLine: "{COMMAND}: {TEXT}" #Dostępne zmienne to {COMMAND} i {TEXT}
+  commandLineText:
+    list: "Pokazuje listę klas"
+    help: "Pokazuje pomoc"
+    reload: "Przeładowuje plugin"
+    show: "Pokazuje klasy"
+    add: "Dodaje klasę"
+    drop: "Pokazuje drop"
+listText:
+  usePrefix:
+    toFirstLine: false
+    toNextLine: false
+  in: "Lista klas"
+  classLine: "{CLASSNAME}, [id: {CLASSID}], maksymalny poziom: {CLASSMAXLVL}, drop: z {CLASSDROPFROM}" #Dostępne zmienne: {CLASSNAME}, {CLASSID}, {CLASSMAXLVL} i {CLASSDROPFROM}
+  dropLine: "- {DROPNAME} z sznasą podstawową: {DROPCHANCE}" #Dostępne zmienne: {DROPNAME} i {DROPCHANCE}
+showText:
+  usePrefix: true
+  showLine: "{CLASSNAME}: poziom - {CLASSLVL} ({CLASSEXP}/{CLASSEXPNEXTLVL}) / {CLASSMAXLVL}" #Dostępne zmienne {CLASSNAME}, {CLASSLVL}, {CLASSEXP}, {CLASSEXPNEXTLVL} i {CLASSMAXLVL}
+  promotion: "Awansowałeś na rangę {CLASSLVL}" #Dostępne zmienna {CLASSLVL}
+newSignCreated: "Utworzono nową tabliczke"
+signSyntaxError: "Zła 2 linia, tabliczka może źle działać"
+noSignPlacePermissions: "Nie masz dostępu do postawienia tego znaku"
+wrongCommand: "Zła komenda"

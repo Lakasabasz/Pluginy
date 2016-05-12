@@ -2,11 +2,14 @@ package pl.ench.mymcworld.klasy;
 
 import org.bukkit.entity.Player;
 
+import pl.ench.mymcworld.klasy.warehouses.KlasyDataForPlayer;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
+
 public class CmdklasyExecuteShow {
-	public static void klasyShowExecute(Player p){
+	public static void klasyShowExecute(Player p, String name){
 		PlayersData pd = null;
 		for(PlayersData pd0 : Main.players){
-			if(p.getName().toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
+			if(name.toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
 				pd = pd0;
 				break;
 			}
@@ -15,6 +18,8 @@ public class CmdklasyExecuteShow {
 		if(pd == null){
 			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("playerNotExist").replace("{PLAYERNAME}", p.getName()));
 			return;
+		} else if(ConfigManager.debugMode){
+			Utils.sendInfo("Znaleziono gracza o nick " + pd.getNick());
 		}
 		
 		for(KlasyDataForPlayer kdfp : pd.getKdfpList()){

@@ -2,6 +2,10 @@ package pl.ench.mymcworld.klasy;
 
 import org.bukkit.entity.Player;
 
+import pl.ench.mymcworld.klasy.warehouses.KlasyData;
+import pl.ench.mymcworld.klasy.warehouses.KlasyDataForPlayer;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
+
 public class CmdklasyExecuteAdd {
 
 	public static void klasyAddExecute(Player p, int idKlasy){
@@ -61,6 +65,13 @@ public class CmdklasyExecuteAdd {
 			kdfp.setPath(kdfp.getPath() + "I");
 			
 			pd.getKdfpList().add(kdfp);
+			for(PlayersData pd0 : Main.players){
+				if(pd.getNick().toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
+					int index = Main.players.indexOf(pd0);
+					Main.players.set(index, pd);
+					break;
+				}
+			}
 			
 			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", 0);
 			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".exp", 0);
@@ -78,6 +89,15 @@ public class CmdklasyExecuteAdd {
 			kdfp.setId(kd.getId());
 			kdfp.setName(kd.getName());
 			kdfp.setMaxlvl(kd.getMaxlvl());
+			
+			pd.getKdfpList().add(kdfp);
+			for(PlayersData pd0 : Main.players){
+				if(pd.getNick().toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
+					int index = Main.players.indexOf(pd0);
+					Main.players.set(index, pd);
+					break;
+				}
+			}
 			
 			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + ".hasklasy", true);
 			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", 0);

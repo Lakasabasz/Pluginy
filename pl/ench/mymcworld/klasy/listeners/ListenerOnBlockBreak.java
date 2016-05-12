@@ -1,4 +1,4 @@
-package pl.ench.mymcworld.klasy;
+package pl.ench.mymcworld.klasy.listeners;
 
 import java.util.List;
 
@@ -8,6 +8,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+
+import pl.ench.mymcworld.klasy.ConfigManager;
+import pl.ench.mymcworld.klasy.Main;
+import pl.ench.mymcworld.klasy.Utils;
+import pl.ench.mymcworld.klasy.warehouses.ItemToDrop;
+import pl.ench.mymcworld.klasy.warehouses.KlasyDataForPlayer;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
 
 public class ListenerOnBlockBreak implements Listener {
 	

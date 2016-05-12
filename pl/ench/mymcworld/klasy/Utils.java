@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import net.md_5.bungee.api.ChatColor;
+import pl.ench.mymcworld.klasy.warehouses.DropData;
+import pl.ench.mymcworld.klasy.warehouses.DropDataForClass;
+import pl.ench.mymcworld.klasy.warehouses.ItemToDrop;
+import pl.ench.mymcworld.klasy.warehouses.KlasyData;
+import pl.ench.mymcworld.klasy.warehouses.KlasyDataForPlayer;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;

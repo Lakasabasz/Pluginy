@@ -1,4 +1,4 @@
-package pl.ench.mymcworld.klasy;
+package pl.ench.mymcworld.klasy.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -6,6 +6,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import pl.ench.mymcworld.klasy.CmdklasyExecuteAdd;
+import pl.ench.mymcworld.klasy.CmdklasyExecuteHelp;
+import pl.ench.mymcworld.klasy.CmdklasyExecuteShow;
+import pl.ench.mymcworld.klasy.ConfigManager;
+import pl.ench.mymcworld.klasy.Utils;
 
 public class ListenerPlayerInteract implements Listener {
 	
@@ -18,7 +24,7 @@ public class ListenerPlayerInteract implements Listener {
 				if(s.getLine(1).equalsIgnoreCase("list")){
 					CmdklasyExecuteHelp.klasyListExecute(e.getPlayer());
 				} else if(s.getLine(1).equalsIgnoreCase("show")){
-					CmdklasyExecuteShow.klasyShowExecute(e.getPlayer());
+					CmdklasyExecuteShow.klasyShowExecute(e.getPlayer(), e.getPlayer().getName());
 				} else if(s.getLine(1).equalsIgnoreCase("add")){
 					CmdklasyExecuteAdd.klasyAddExecute(e.getPlayer(), Integer.parseInt(s.getLine(2)));
 				}

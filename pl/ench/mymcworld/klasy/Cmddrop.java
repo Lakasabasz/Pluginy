@@ -4,6 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import pl.ench.mymcworld.klasy.warehouses.ItemToDrop;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
+
 public class Cmddrop implements CommandExecutor {
 
 	@Override
@@ -19,9 +22,7 @@ public class Cmddrop implements CommandExecutor {
 						sender.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("noClassNoDrop"));
 						return false;
 					} else {
-						String msg = Utils.getMessage("countDrop");
-						msg.replace("{DROPCOUNT}", Integer.toString(pd.getItdList().size()));
-						sender.sendMessage(msg);
+						sender.sendMessage(Utils.getMessage("countDrop").replace("{DROPCOUNT}", "" + pd.getItdList().size()));
 					}
 					for(ItemToDrop itd : pd.getItdList()){
 						sender.sendMessage(Utils.getMessage("dropData").replace("{DROPNAME}", itd.getDrop().getType().toString()).replace("{DROPCHANCE}", Double.toString(itd.getChance())));

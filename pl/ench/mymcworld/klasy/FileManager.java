@@ -23,4 +23,11 @@ public class FileManager {
 	public static YamlConfiguration getMsg(){
 		return messages;
 	}
+	
+	public static boolean reloadFiles(){
+		YamlConfiguration m = YamlConfiguration.loadConfiguration(new File(Main.getInst().getDataFolder(), "messages.yml"));
+		if(m == null) return false;
+		messages = m;
+		return true;
+	}
 }

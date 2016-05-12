@@ -1,4 +1,4 @@
-package pl.ench.mymcworld.klasy;
+package pl.ench.mymcworld.klasy.warehouses;
 
 import java.util.List;
 

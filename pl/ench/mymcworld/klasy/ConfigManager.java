@@ -5,6 +5,12 @@ import java.util.List;
 
 import org.bukkit.configuration.ConfigurationSection;
 
+import pl.ench.mymcworld.klasy.warehouses.DropData;
+import pl.ench.mymcworld.klasy.warehouses.DropDataForClass;
+import pl.ench.mymcworld.klasy.warehouses.KlasyData;
+import pl.ench.mymcworld.klasy.warehouses.KlasyDataForPlayer;
+import pl.ench.mymcworld.klasy.warehouses.PlayersData;
+
 public class ConfigManager {
 
 	public static String historyDirName;

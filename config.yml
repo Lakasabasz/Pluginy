@@ -1,0 +1,33 @@
+#Log directory
+historyDir: logs
+
+#Debug Mode
+debug: true
+
+#Class configuration
+klasy:
+  Killer: # The unique name of the class
+    name: 'Zabójca' # Displayed class name
+    id: 0 # Id of class, must be int
+    maxlvl: 100 # Max level of class
+    drop:
+      items:
+        diamond_sword: # The unique name of item
+          itemId: diamond_sword # Item id
+          chance: 0.05 # Basic chance
+        diamond_axe:
+          itemId: diamond_axe
+          chance: 0.01
+        diamond_helmet:
+          itemId: diamond_helmet
+          chance: 0.025
+        diamond_chestplate:
+          itemId: diamond_chestplate
+          chance: 0.02
+        diamond_leggings:
+          itemId: diamond_leggings
+          chance: 0.01
+        diamond_boots:
+          itemId: diamond_boots
+          chance: 0.05
+      from: obsidian # From what the block has be dropped

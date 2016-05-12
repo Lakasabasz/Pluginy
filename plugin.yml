@@ -1,0 +1,44 @@
+name: Mymcworld Klasy
+version: 1.0.1
+main: pl.ench.mymcworld.klasy.Main
+website: http://mymcworld.ench.pl
+author: Raktrum
+
+commands:
+  klasy:
+    description: Lista klas do wyboru
+  drop:
+    description: Pokazuje szanse na drop z obsydu
+    
+permissions:
+  mymcworld.*:
+    default: op
+    children:
+      mymcworld.klasy: true
+      mymcworld.klasy.*: true
+      mymcworld.drop: true
+      mymcworld.placesign: true
+  mymcworld.klasy:
+    default: true
+  mymcworld.klasy.*:
+    default: op
+    children:
+      mymcworld.klasy.add: true
+      mymcworld.klasy.reload: true
+      mymcworld.klasy.help: true
+      mymcworld.klasy.show: true
+      mymcworld.klasy.list: true
+  mymcworld.klasy.add:
+    default: op
+  mymcworld.klasy.list:
+    default: op
+  mymcworld.klasy.reload:
+    default: op
+  mymcworld.klasy.help:
+    default: true
+  mymcworld.klasy.show:
+    default: true
+  mymcworld.drop:
+    default: true
+  mymcworld.placesign:
+    default: op

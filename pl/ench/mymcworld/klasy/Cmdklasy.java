@@ -61,7 +61,7 @@ public class Cmdklasy implements CommandExecutor {
 		} else if(args.length == 2){
 			if(args[0].equalsIgnoreCase("show")){
 				if(sender.hasPermission("mymcworld.klasy.show")){
-					CmdklasyExecuteShow.klasyShowExecute((Player) sender);
+					CmdklasyExecuteShow.klasyShowExecute((Player) sender, args[1]);
 					return true;
 				} else{
 					sender.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("noPermissionsCommand"));
@@ -78,7 +78,8 @@ public class Cmdklasy implements CommandExecutor {
 					return false;
 				}
 			}
-		} 
+		}
+		sender.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("wrongCommand"));
 		return false;
 	}
 
