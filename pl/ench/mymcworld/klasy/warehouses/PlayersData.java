@@ -39,5 +39,10 @@ public class PlayersData {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
+	
+	public boolean equals(PlayersData pd){
+		if(!this.nick.toLowerCase().equalsIgnoreCase(pd.getNick())) return false;
+		return true;
+	}
 
 }

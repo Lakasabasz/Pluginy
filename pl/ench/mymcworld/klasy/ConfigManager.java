@@ -111,7 +111,6 @@ public class ConfigManager {
 			
 			ConfigurationSection gracz = player.getConfigurationSection(path0);
 			for(String path1 : gracz.getKeys(false)){
-				KlasyDataForPlayer kdfp = new KlasyDataForPlayer();
 				
 				if(path1.equalsIgnoreCase("hasklasy")){
 					pd.setHasklasy(gracz.getBoolean("hasklasy"));
@@ -126,17 +125,17 @@ public class ConfigManager {
 					continue;
 				}
 				
-				kdfp.setId(gracz.getInt(path1 + ".id"));
-				kdfp.setExp(gracz.getInt(path1 + ".exp"));
-				kdfp.setLvl(gracz.getInt(path1 + ".lvl"));
-				kdfp.setExpToNextLvl(kdfp.getLvl() * 2);
-				
+				String n = new String();
+				int l = -1;
 				for(KlasyData kdT : Main.klasy){
-					if(kdT.getId() == kdfp.getId()){
-						kdfp.setName(kdT.getName());
+					if(kdT.getId() == gracz.getInt(path1 + ".id")){
+						n = kdT.getName();
+						l = kdT.getMaxlvl();
 						break;
 					}
 				}
+				KlasyDataForPlayer kdfp = new KlasyDataForPlayer(gracz.getInt(path1 + ".id", -1), n, gracz.getInt(path1 + ".lvl"), gracz.getInt(path1 + ".exp"), gracz.getInt(path1 + ".exp") * 2, path1, l);
+				if(!kdfp.checkValues()) return false;
 				lkdfp.add(kdfp);
 			}
 			pd.setKdfpList(lkdfp);
@@ -167,6 +166,7 @@ public class ConfigManager {
 	}
 	
 	public static boolean reloadPlayers(){
+		//Odczyt danych o graczach
 		ConfigurationSection player = Main.getInst().getConfig().getConfigurationSection("Player");//Pozycja Player
 		for(String path0 : player.getKeys(false)){ //Lista graczy
 			if((player.get(path0) == null) ||
@@ -187,7 +187,6 @@ public class ConfigManager {
 			
 			ConfigurationSection gracz = player.getConfigurationSection(path0);
 			for(String path1 : gracz.getKeys(false)){
-				KlasyDataForPlayer kdfp = new KlasyDataForPlayer();
 				
 				if(path1.equalsIgnoreCase("hasklasy")){
 					pd.setHasklasy(gracz.getBoolean("hasklasy"));
@@ -202,17 +201,17 @@ public class ConfigManager {
 					continue;
 				}
 				
-				kdfp.setId(gracz.getInt(path1 + ".id"));
-				kdfp.setExp(gracz.getInt(path1 + ".exp"));
-				kdfp.setLvl(gracz.getInt(path1 + ".lvl"));
-				kdfp.setExpToNextLvl(kdfp.getLvl() * 2);
-				
+				String n = new String();
+				int l = -1;
 				for(KlasyData kdT : Main.klasy){
-					if(kdT.getId() == kdfp.getId()){
-						kdfp.setName(kdT.getName());
+					if(kdT.getId() == gracz.getInt(path1 + ".id")){
+						n = kdT.getName();
+						l = kdT.getMaxlvl();
 						break;
 					}
 				}
+				KlasyDataForPlayer kdfp = new KlasyDataForPlayer(gracz.getInt(path1 + ".id", -1), n, gracz.getInt(path1 + ".lvl"), gracz.getInt(path1 + ".exp"), gracz.getInt(path1 + ".exp") * 2, path1, l);
+				if(!kdfp.checkValues()) return false;
 				lkdfp.add(kdfp);
 			}
 			pd.setKdfpList(lkdfp);
@@ -230,11 +229,6 @@ public class ConfigManager {
 				Main.players.add(pd);
 			}
 		}
-		
-		if(debugMode){
-			Utils.printDataLoaded();
-		}
-		
 		return true;
 	}
 }

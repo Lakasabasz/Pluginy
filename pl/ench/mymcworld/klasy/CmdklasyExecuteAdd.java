@@ -79,16 +79,10 @@ public class CmdklasyExecuteAdd {
 			Main.getInst().saveConfig();
 			
 			ConfigManager.reloadPlayers();
+			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("classAddSucces").replace("{CLASSNAME}", kdfp.getName()));
 			return;
 		} else {
-			KlasyDataForPlayer kdfp = new KlasyDataForPlayer();
-			kdfp.setExp(0);
-			kdfp.setExpToNextLvl(0);
-			kdfp.setLvl(0);
-			kdfp.setPath("klasaI");
-			kdfp.setId(kd.getId());
-			kdfp.setName(kd.getName());
-			kdfp.setMaxlvl(kd.getMaxlvl());
+			KlasyDataForPlayer kdfp = new KlasyDataForPlayer(kd.getId(), kd.getName(), 0, 0, 0, "klasaI", kd.getMaxlvl());
 			
 			pd.getKdfpList().add(kdfp);
 			for(PlayersData pd0 : Main.players){
@@ -106,6 +100,7 @@ public class CmdklasyExecuteAdd {
 			Main.getInst().saveConfig();
 			
 			ConfigManager.reloadPlayers();
+			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("classAddSucces").replace("{CLASSNAME}", kdfp.getName()));
 			return;
 		}
 	}

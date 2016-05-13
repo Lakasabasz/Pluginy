@@ -1,13 +1,23 @@
 package pl.ench.mymcworld.klasy.warehouses;
 
 public class KlasyDataForPlayer {
-	private int id;
-	private String name;
-	private int lvl;
-	private int exp;
-	private int expToNextLvl;
-	private String path;
-	private int maxlvl;
+	private int id = -1;
+	private String name = null;
+	private int lvl = -1;
+	private int exp = -1;
+	private int expToNextLvl = -1;
+	private String path = null;
+	private int maxlvl = -1;
+	
+	public KlasyDataForPlayer(int Id, String Name, int Lvl, int Exp, int ETNL, String Path, int Maxlvl){
+		id = Id;
+		name = Name;
+		lvl = Lvl;
+		exp = Exp;
+		expToNextLvl = ETNL;
+		path = Path;
+		maxlvl = Maxlvl;
+	}
 	
 	public int getId() {
 		return id;
@@ -53,5 +63,9 @@ public class KlasyDataForPlayer {
 		this.maxlvl = maxlvl;
 	}
 	
-	
+	public boolean checkValues(){
+		if(name == null || (path == null || path.equalsIgnoreCase("null"))) return false;
+		if(!(exp >= 0) || !(this.expToNextLvl >= 0) || !(this.id >= 0) || !(this.lvl >= 0) || !(this.maxlvl >= 0)) return false;
+		return true;
+	}
 }

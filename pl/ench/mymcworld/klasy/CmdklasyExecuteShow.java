@@ -22,6 +22,11 @@ public class CmdklasyExecuteShow {
 			Utils.sendInfo("Znaleziono gracza o nick " + pd.getNick());
 		}
 		
+		if(pd.getKdfpList().size() == 0){
+			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("noClass"));
+			return;
+		}
+		
 		for(KlasyDataForPlayer kdfp : pd.getKdfpList()){
 			if(FileManager.getMsg().getBoolean("showText.usePrefix")) p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("showText.showLine").replace("{CLASSNAME}", kdfp.getName()).replace("{CLASSLVL}", "" + kdfp.getLvl()).replace("{CLASSEXP}", "" + kdfp.getExp()).replace("{CLASSEXPNEXTLVL}", "" + kdfp.getExpToNextLvl()).replace("{CLASSMAXLVL}", "" + kdfp.getMaxlvl()));
 			else p.sendMessage(Utils.getMessage("showText.showLine").replace("{CLASSNAME}", kdfp.getName()).replace("{CLASSLVL}", "" + kdfp.getLvl()).replace("{CLASSEXP}", "" + kdfp.getExp()).replace("{CLASSEXPNEXTLVL}", "" + kdfp.getExpToNextLvl()).replace("{CLASSMAXLVL}", "" + kdfp.getMaxlvl()));
