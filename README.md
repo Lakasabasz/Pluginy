@@ -45,14 +45,6 @@ klasy:
       from: obsidian # From what the block has be dropped
 ```
 
-## Features
-
-* Bug fixes
-* Optimization
-* Database support
-* Log to file
-* More variables in messages.yml
-
 ## Author
 
 Łukasz 'Łakasabasz' Mastalerz
