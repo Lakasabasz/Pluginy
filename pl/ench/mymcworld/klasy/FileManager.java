@@ -1,6 +1,7 @@
 package pl.ench.mymcworld.klasy;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -31,6 +32,18 @@ public class FileManager {
 	
 	public static YamlConfiguration getPlayers(){
 		return players;
+	}
+	
+	public static boolean setPlayers(YamlConfiguration p){
+		try {
+			p.save(new File(Main.getInst().getDataFolder(), "players.yml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		players = YamlConfiguration.loadConfiguration(new File(Main.getInst().getDataFolder(), "players.yml"));
+		return true;
 	}
 	
 	public static boolean reloadFiles(){

@@ -1,12 +1,23 @@
 package pl.ench.mymcworld.klasy.warehouses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayersData {
-	private List<KlasyDataForPlayer> kdfpList;
-	private List<ItemToDrop> itdList;
-	private boolean hasklasy;
-	private String nick;
+	private List<KlasyDataForPlayer> kdfpList = null;
+	private List<ItemToDrop> itdList = null;
+	private boolean hasklasy = false;
+	private String nick = null;
+	
+	public PlayersData(){
+		kdfpList = new ArrayList<KlasyDataForPlayer>();
+		itdList = new ArrayList<ItemToDrop>();
+	}
+	
+	public boolean checkValues(){
+		if(kdfpList == null || itdList == null || nick == null) return false;
+		return true;
+	}
 
 	public List<KlasyDataForPlayer> getKdfpList() {
 		return kdfpList;
@@ -14,6 +25,10 @@ public class PlayersData {
 
 	public void setKdfpList(List<KlasyDataForPlayer> kdfpList) {
 		this.kdfpList = kdfpList;
+	}
+	
+	public void addKdfpRecord(KlasyDataForPlayer kdfp){
+		this.getKdfpList().add(kdfp);
 	}
 
 	public List<ItemToDrop> getItdList() {

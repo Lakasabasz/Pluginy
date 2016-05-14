@@ -27,10 +27,6 @@ public class ConfigManager {
 			Utils.sendInfo("Czyszczenie Main.klasy z " + Main.klasy.size() + " pozycji");
 			Main.klasy.clear();
 		}
-		if(Main.players.size() > 0){
-			Utils.sendInfo("Czyszczenie Main.players z " + Main.players.size() + " pozycji");
-			Main.players.clear();
-		}
 		
 		
 		if(Main.getInst().getConfig().get("historyDir") == null){ //Forlder logów
@@ -90,70 +86,6 @@ public class ConfigManager {
 				}
 			}
 		
-		//Odczyt danych o graczach
-		ConfigurationSection player = Main.getInst().getConfig().getConfigurationSection("Player");//Pozycja Player
-		for(String path0 : player.getKeys(false)){ //Lista graczy
-			if((player.get(path0) == null) ||
-				(player.get(path0 + ".hasklasy") == null)){
-				Utils.sendInfo("Uszkodzony config w klasie " + path0);
-				return false;
-			}
-			
-			PlayersData pd = new PlayersData();
-			pd.setNick(path0);
-			
-			if(debugMode){
-				Utils.sendInfo("Dane z pd.getNick(): " + pd.getNick());
-				Utils.sendInfo("Dane z path0: " + path0);
-			}
-
-			List<KlasyDataForPlayer> lkdfp = new ArrayList<KlasyDataForPlayer>();
-			
-			ConfigurationSection gracz = player.getConfigurationSection(path0);
-			for(String path1 : gracz.getKeys(false)){
-				
-				if(path1.equalsIgnoreCase("hasklasy")){
-					pd.setHasklasy(gracz.getBoolean("hasklasy"));
-					continue;
-				}
-				
-				if((gracz.get(path1) == null)
-					|| (gracz.get(path1 + ".lvl") == null)
-					|| (gracz.get(path1 + ".exp") == null)
-					|| (gracz.get(path1 + ".id") == null)){
-					Utils.sendInfo("Uszkodzony config w sekcji players gracza " + path0 + " klasie " + path1);
-					continue;
-				}
-				
-				String n = new String();
-				int l = -1;
-				for(KlasyData kdT : Main.klasy){
-					if(kdT.getId() == gracz.getInt(path1 + ".id")){
-						n = kdT.getName();
-						l = kdT.getMaxlvl();
-						break;
-					}
-				}
-				KlasyDataForPlayer kdfp = new KlasyDataForPlayer(gracz.getInt(path1 + ".id", -1), n, gracz.getInt(path1 + ".lvl"), gracz.getInt(path1 + ".exp"), gracz.getInt(path1 + ".exp") * 2, path1, l);
-				if(!kdfp.checkValues()) return false;
-				lkdfp.add(kdfp);
-			}
-			pd.setKdfpList(lkdfp);
-			
-			if(pd.isHasklasy()){
-				PlayersData pd0 = Utils.loadBlocks(pd);
-				
-				if(pd0 == null){
-					Utils.sendInfo("Wyst¹pi³ b³¹d");
-					return false;
-				} else {
-					Main.players.add(pd0);
-				}
-			} else {
-				Main.players.add(pd);
-			}
-		}
-		
 		if(debugMode){
 			Utils.printDataLoaded();
 		}
@@ -166,68 +98,58 @@ public class ConfigManager {
 	}
 	
 	public static boolean reloadPlayers(){
-		//Odczyt danych o graczach
-		ConfigurationSection player = Main.getInst().getConfig().getConfigurationSection("Player");//Pozycja Player
-		for(String path0 : player.getKeys(false)){ //Lista graczy
-			if((player.get(path0) == null) ||
-				(player.get(path0 + ".hasklasy") == null)){
-				Utils.sendInfo("Uszkodzony config w klasie " + path0);
-				return false;
-			}
-			
+		Main.players = new ArrayList<PlayersData>();
+		if(FileManager.getPlayers() == null) return true;
+		for(String nick : FileManager.getPlayers().getKeys(false)){
 			PlayersData pd = new PlayersData();
-			pd.setNick(path0);
+			ConfigurationSection singlePlayer = FileManager.getPlayers().getConfigurationSection(nick);
 			
-			if(debugMode){
-				Utils.sendInfo("Dane z pd.getNick(): " + pd.getNick());
-				Utils.sendInfo("Dane z path0: " + path0);
-			}
-
+			pd.setNick(nick);
+			
+			// Checking player's section
+			if(singlePlayer.get("hasklasy") == null) {Utils.sendError("ConfigManager, function: reloadPlayers, 110 - " + nick + ".hasklasy is null"); return false;}
+			if((singlePlayer.getBoolean("hasklasy", true) == true) && (singlePlayer.getBoolean("hasklasy", false) == false)){ Utils.sendError("ConfigManager, function: reloadPlayers, 111 - " + nick + ".hasklasy is bad value"); return false;}
+			
+			// First is ok, adding do pd
+			pd.setHasklasy(singlePlayer.getBoolean("hasklasy"));
+			
 			List<KlasyDataForPlayer> lkdfp = new ArrayList<KlasyDataForPlayer>();
 			
-			ConfigurationSection gracz = player.getConfigurationSection(path0);
-			for(String path1 : gracz.getKeys(false)){
+			// Checking player's class
+			for(String classPath : singlePlayer.getKeys(false)){
+				// Ignoring classPath == "hasklasy"
+				if(classPath.equalsIgnoreCase("hasklasy")) continue;
+				if((singlePlayer.get(classPath + ".lvl") == null) || (singlePlayer.get(classPath + ".exp") == null) || (singlePlayer.get(classPath + ".id") == null)) {Utils.sendError("ConfigManager, function: reloadPlayers, 120 - " + nick + "." + classPath + " is null"); return false;}
+				if((singlePlayer.getInt(classPath + ".lvl", -1) == -1) || (singlePlayer.getInt(classPath + ".exp", -1) == -1) || (singlePlayer.getInt(classPath + ".id", -1) == -1)) {Utils.sendError("ConfigManager, function: reloadPlayers, 121 - " + nick + "." + classPath + " is bad value"); return false;}
 				
-				if(path1.equalsIgnoreCase("hasklasy")){
-					pd.setHasklasy(gracz.getBoolean("hasklasy"));
-					continue;
-				}
+				// All is ok, adding to lkdfp
+				int id = singlePlayer.getInt(classPath + ".id");
+				int lvl = singlePlayer.getInt(classPath + ".lvl");
+				int exp = singlePlayer.getInt(classPath + ".exp");
+				int maxlvl = -1;
+				String name = null;
 				
-				if((gracz.get(path1) == null)
-					|| (gracz.get(path1 + ".lvl") == null)
-					|| (gracz.get(path1 + ".exp") == null)
-					|| (gracz.get(path1 + ".id") == null)){
-					Utils.sendInfo("Uszkodzony config w sekcji players gracza " + path0 + " klasie " + path1);
-					continue;
-				}
-				
-				String n = new String();
-				int l = -1;
-				for(KlasyData kdT : Main.klasy){
-					if(kdT.getId() == gracz.getInt(path1 + ".id")){
-						n = kdT.getName();
-						l = kdT.getMaxlvl();
+				for(KlasyData kd : Main.klasy){
+					if(kd.getId() == id){
+						name = kd.getName();
+						maxlvl = kd.getMaxlvl();
 						break;
 					}
 				}
-				KlasyDataForPlayer kdfp = new KlasyDataForPlayer(gracz.getInt(path1 + ".id", -1), n, gracz.getInt(path1 + ".lvl"), gracz.getInt(path1 + ".exp"), gracz.getInt(path1 + ".exp") * 2, path1, l);
+				if(name == null || maxlvl == -1){
+					Utils.sendError("ConfigManager, function: reloadPlayers, 140: Not match");
+					return false;
+				}
+				
+				KlasyDataForPlayer kdfp = new KlasyDataForPlayer(id, name, lvl, exp, lvl * 2, classPath, maxlvl);
 				if(!kdfp.checkValues()) return false;
 				lkdfp.add(kdfp);
 			}
 			pd.setKdfpList(lkdfp);
-			
-			if(pd.isHasklasy()){
-				PlayersData pd0 = Utils.loadBlocks(pd);
-				
-				if(pd0 == null){
-					Utils.sendInfo("Wyst¹pi³ b³¹d");
-					return false;
-				} else {
-					Main.players.add(pd0);
-				}
-			} else {
-				Main.players.add(pd);
-			}
+			PlayersData q = Utils.loadBlocks(pd);
+			if(q == null) {Utils.sendError("Cannot set block in variable"); return false;}
+			if(!q.checkValues()) {Utils.sendError("Variable could not pass checkValues test"); return false;}
+			Main.players.add(q);
 		}
 		return true;
 	}

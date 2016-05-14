@@ -3,6 +3,7 @@ package pl.ench.mymcworld.klasy.listeners;
 import java.util.List;
 
 import org.bukkit.GameMode;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import pl.ench.mymcworld.klasy.ConfigManager;
+import pl.ench.mymcworld.klasy.FileManager;
 import pl.ench.mymcworld.klasy.Main;
 import pl.ench.mymcworld.klasy.Utils;
 import pl.ench.mymcworld.klasy.warehouses.ItemToDrop;
@@ -51,8 +53,7 @@ public class ListenerOnBlockBreak implements Listener {
 				
 				List<KlasyDataForPlayer> lkdfp = pd.getKdfpList();
 				KlasyDataForPlayer kdfp = lkdfp.get(lkdfp.size() - 1);
-				int exp = kdfp.getExp();
-				exp++;
+				int exp = kdfp.getExp() + 1;
 				if(exp >= kdfp.getExpToNextLvl() && kdfp.getLvl() < kdfp.getMaxlvl()){
 					exp = exp - kdfp.getExpToNextLvl();
 					kdfp.setLvl(kdfp.getLvl() + 1);
@@ -63,10 +64,10 @@ public class ListenerOnBlockBreak implements Listener {
 				lkdfp.set(lkdfp.size() - 1, kdfp);
 				pd.setKdfpList(lkdfp);
 				
-				
-				Main.getInst().getConfig().set("Player." + e.getPlayer().getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", kdfp.getLvl());
-				Main.getInst().getConfig().set("Player." + e.getPlayer().getName().toLowerCase() + "." + kdfp.getPath() + ".exp", kdfp.getExp());
-				Main.getInst().saveConfig();
+				YamlConfiguration pl = FileManager.getPlayers();
+				pl.set(e.getPlayer().getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", kdfp.getLvl());
+				pl.set(e.getPlayer().getName().toLowerCase() + "." + kdfp.getPath() + ".exp", exp);
+				FileManager.setPlayers(pl);
 				ConfigManager.reloadPlayers();
 			}
 		}

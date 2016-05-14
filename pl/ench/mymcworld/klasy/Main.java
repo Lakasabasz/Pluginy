@@ -17,12 +17,10 @@ public class Main extends JavaPlugin{
 	private static Main instance;
 	public static List<KlasyData> klasy;
 	public static List<PlayersData> players;
-	
-	public Main(){
-		instance = this;
-	}
 
 	public void onEnable(){		
+		instance = this;
+		
 		Bukkit.getPluginManager().registerEvents(new ListenerOnBlockBreak(), this);
 		Bukkit.getPluginManager().registerEvents(new ListenerOnJoin(), this);
 		Bukkit.getPluginManager().registerEvents(new ListenerOnBlockPlace(), this);
@@ -31,10 +29,8 @@ public class Main extends JavaPlugin{
 		saveDefaultConfig();
 		
 		FileManager.checkFiles();
-		
-		if(!ConfigManager.configReload()){
-			System.out.println(Utils.getMessage("prefix") + " Nie mo¿na za³adowaæ configu");
-		}
+		if(!ConfigManager.configReload()){Utils.sendError("Cannot load config"); this.setEnabled(false);}
+		if(!ConfigManager.reloadPlayers()){Utils.sendError("Cannot reload players"); this.setEnabled(false);}
 		
 		getCommand("klasy").setExecutor(new Cmdklasy());
 		getCommand("drop").setExecutor(new Cmddrop());

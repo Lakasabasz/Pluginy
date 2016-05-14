@@ -1,5 +1,6 @@
 package pl.ench.mymcworld.klasy;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import pl.ench.mymcworld.klasy.warehouses.KlasyData;
@@ -20,7 +21,7 @@ public class CmdklasyExecuteAdd {
 		
 		if(pd == null){
 			p.sendMessage(Utils.getMessage("prefix") +  " " + Utils.getMessage("playerNotExist").replace("{PALYERNAME}", p.getName()));
-			Utils.sendInfo("[klasy/drop] Gracz " + p.getName() + " nie istnieje w systemie");
+			Utils.sendError("Gracz " + p.getName() + " nie istnieje w systemie");
 			return;
 		}
 		
@@ -59,32 +60,23 @@ public class CmdklasyExecuteAdd {
 			kdfp.setExp(0);
 			kdfp.setId(kd.getId());
 			kdfp.setLvl(0);
-			kdfp.setExpToNextLvl(kdfp.getLvl() * 2);
-			kdfp.setMaxlvl(kd.getMaxlvl());
-			kdfp.setName(kd.getName());
 			kdfp.setPath(kdfp.getPath() + "I");
 			
-			pd.getKdfpList().add(kdfp);
-			for(PlayersData pd0 : Main.players){
-				if(pd.getNick().toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
-					int index = Main.players.indexOf(pd0);
-					Main.players.set(index, pd);
-					break;
-				}
+			YamlConfiguration players = FileManager.getPlayers();
+			players.set(p.getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", 0);
+			players.set(p.getName().toLowerCase() + "." + kdfp.getPath() + ".exp", 0);
+			players.set(p.getName().toLowerCase() + "." + kdfp.getPath() + ".id", kdfp.getId());
+			FileManager.setPlayers(players);
+			
+			if(!ConfigManager.reloadPlayers()){
+				
 			}
-			
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", 0);
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".exp", 0);
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".id", kdfp.getId());
-			Main.getInst().saveConfig();
-			
-			ConfigManager.reloadPlayers();
 			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("classAddSucces").replace("{CLASSNAME}", kdfp.getName()));
 			return;
 		} else {
 			KlasyDataForPlayer kdfp = new KlasyDataForPlayer(kd.getId(), kd.getName(), 0, 0, 0, "klasaI", kd.getMaxlvl());
 			
-			pd.getKdfpList().add(kdfp);
+			pd.addKdfpRecord(kdfp);
 			for(PlayersData pd0 : Main.players){
 				if(pd.getNick().toLowerCase().equalsIgnoreCase(pd0.getNick().toLowerCase())){
 					int index = Main.players.indexOf(pd0);
@@ -93,11 +85,12 @@ public class CmdklasyExecuteAdd {
 				}
 			}
 			
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + ".hasklasy", true);
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".lvl", 0);
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".exp", 0);
-			Main.getInst().getConfig().set("Player." + p.getName().toLowerCase() + "." + kdfp.getPath() + ".id", kdfp.getId());
-			Main.getInst().saveConfig();
+			YamlConfiguration players = FileManager.getPlayers();
+			players.set(p.getName().toLowerCase() + ".hasklasy", true);
+			players.set(p.getName().toLowerCase() + ".klasaI.lvl", 0);
+			players.set(p.getName().toLowerCase() + ".klasaI.exp", 0);
+			players.set(p.getName().toLowerCase() + ".klasaI.id", kdfp.getId());
+			FileManager.setPlayers(players);
 			
 			ConfigManager.reloadPlayers();
 			p.sendMessage(Utils.getMessage("prefix") + " " + Utils.getMessage("classAddSucces").replace("{CLASSNAME}", kdfp.getName()));

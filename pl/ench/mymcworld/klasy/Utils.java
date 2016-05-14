@@ -31,11 +31,20 @@ public class Utils {
 	}
 	
 	public static void sendInfo(String msg){
+		if(!ConfigManager.debugMode) return;
 		if(msg == null || msg.isEmpty()){
-			System.out.println("[Klasy/Drop] Wywo³anie funkcji Utils.sendInfo z parametrem zerowym");
+			System.out.println("[Klasy/Drop (Error)] Wywo³anie funkcji Utils.sendInfo z parametrem zerowym");
 			return;
 		}
-		System.out.println("[Klasy/Drop] " + msg);
+		System.out.println("[Klasy/Drop (Info)] " + msg);
+	}
+	
+	public static void sendError(String msg){
+		if(msg == null || msg.isEmpty()){
+			System.out.println("[Klasy/Drop (Error)] Wywo³anie funkcji Utils.sendError z parametrem zerowym");
+			return;
+		}
+		System.out.println("[Klasy/Drop (Error)] " + msg);
 	}
 	
 	public static String getMessage(String path){
